@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace Harnet
         {
             return new Log
             {
-                Version = double.Parse(logDto.version),
+                Version = double.Parse(logDto.version, CultureInfo.InvariantCulture.NumberFormat),
                 Creator = logDto.creator.FromDto(),
                 Pages = PageDtoListToPageList(logDto.pages),
                 Entries = EntryDtoListToEntryList(logDto.entries),
@@ -40,7 +41,7 @@ namespace Harnet
             return new Browser
             {
                 Name = browserDto.name,
-                Version = double.Parse(browserDto.version),
+                Version = double.Parse(browserDto.version, CultureInfo.InvariantCulture.NumberFormat),
                 Comment = browserDto.comment
             };
             
@@ -51,7 +52,7 @@ namespace Harnet
             return new Creator
             {
                 Name = creatorDto.name,
-                Version = double.Parse(creatorDto.version),
+                Version = double.Parse(creatorDto.version, CultureInfo.InvariantCulture.NumberFormat),
                 Comment = creatorDto.comment
             };
         }
