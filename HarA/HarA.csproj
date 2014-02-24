@@ -52,7 +52,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="www.fsf.org.har">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
