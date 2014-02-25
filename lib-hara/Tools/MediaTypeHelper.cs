@@ -26,6 +26,9 @@ namespace Harnet.Tools
             // Text
             Mappings.Add("text/css", MediaTypes.TEXT);
             Mappings.Add("text/html", MediaTypes.TEXT);
+            Mappings.Add("text/javascript", MediaTypes.TEXT);
+            Mappings.Add("application/x-javascript", MediaTypes.TEXT);  // Even though this is an "application" media type, it's actually plain text so we need to flag it as such. WTF, Javascript...
+            Mappings.Add("application/javascript", MediaTypes.TEXT);    // Same as application/javascript
             Mappings.Add("text/plain", MediaTypes.TEXT);
             Mappings.Add("text/richtext", MediaTypes.TEXT);
             Mappings.Add("text/tab-separated-values", MediaTypes.TEXT);            
@@ -51,7 +54,6 @@ namespace Harnet.Tools
             Mappings.Add("application/atomicmail", MediaTypes.APPLICATION);            
             Mappings.Add("application/dca-rft", MediaTypes.APPLICATION);
             Mappings.Add("application/dec-dx", MediaTypes.APPLICATION);
-            Mappings.Add("application/javascript", MediaTypes.APPLICATION);
             Mappings.Add("application/mac-binhex40", MediaTypes.APPLICATION);
             Mappings.Add("application/macwriteii", MediaTypes.APPLICATION);
             Mappings.Add("application/msword", MediaTypes.APPLICATION);
@@ -67,7 +69,7 @@ namespace Harnet.Tools
             Mappings.Add("application/wita", MediaTypes.APPLICATION);
             Mappings.Add("application/wordperfect5.1", MediaTypes.APPLICATION);
             Mappings.Add("application/zip", MediaTypes.APPLICATION);
-
+            
             // Image
             Mappings.Add("image/gif", MediaTypes.IMAGE);
             Mappings.Add("image/ief", MediaTypes.IMAGE);
@@ -82,6 +84,9 @@ namespace Harnet.Tools
             // Video
             Mappings.Add("video/mpeg", MediaTypes.VIDEO);
             Mappings.Add("video/quicktime", MediaTypes.VIDEO);
+
+            // Experimental
+            
 
         }
     }
