@@ -17,13 +17,16 @@ namespace HarA
     {
         static void Main(string[] args)
         {
-            string content = null;
             if (args.Length == 0)
             {
+                string[] filePaths = Directory.GetFiles(@".", "*.har");
                 // Using this for dev to make things easier
-                if (File.Exists(@".\www.fsf.org.har"))
+                if (filePaths.Length >= 1)
                 {
-                    content = File.ReadAllText(@".\www.fsf.org.har");
+                    foreach (string path in filePaths)
+                    {
+                        HandleHarFile(path);
+                    }
                 }
                 else
                 {
@@ -31,77 +34,64 @@ namespace HarA
                     Console.ReadKey();
                     return;
                 }                
-            }           
-
-            Log datLog = HarConverter.ImportHarContent(content);
-            Console.WriteLine("Total Response size: " + datLog.CumulatedResponseSize + " bytes (headers: "+datLog.CumulatedResponseHeaderSize+" ; bodies: "+datLog.CumulatedResponseBodySize+" )");
-            Console.WriteLine("Total Request size: " + datLog.CumulatedRequestSize + " bytes (headers: " + datLog.CumulatedRequestHeaderSize + " ; bodies: " + datLog.CumulatedRequestBodySize + " )");
-            Console.WriteLine("Found " + datLog.Entries.Count + " entries in log.");
-            WriteReponseFiles(datLog);
+            }    
+            
             Console.Write("Parsing complete. Press any key to exit.");
             Console.ReadKey();
         }
-        private static void WriteReponseFiles(Log harLog)
+
+        private static void HandleHarFile(string filePath)
+        {
+            string content = File.ReadAllText(filePath);
+            Log datLog = HarConverter.ImportHarContent(content);
+            Console.WriteLine("Total Response size: " + datLog.CumulatedResponseSize + " bytes (headers: " + datLog.CumulatedResponseHeaderSize + " ; bodies: " + datLog.CumulatedResponseBodySize + " )");
+            Console.WriteLine("Total Request size: " + datLog.CumulatedRequestSize + " bytes (headers: " + datLog.CumulatedRequestHeaderSize + " ; bodies: " + datLog.CumulatedRequestBodySize + " )");
+            Console.WriteLine("Found " + datLog.Entries.Count + " entries in log.");
+            WriteReponseFiles(datLog, Path.GetFileName(filePath));
+        }
+        private static void WriteReponseFiles(Log harLog, string logFileName)
         {
             string formattedDate = DateTime.Now.Month.ToString() + "-" + DateTime.Now.Day.ToString() + "-" + DateTime.Now.Year.ToString() + "_" + DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + "-" + DateTime.Now.Second.ToString();
-            string directory = Directory.GetCurrentDirectory() + "\\" + formattedDate + "\\haranet\\";
+            string directory = Directory.GetCurrentDirectory() + "\\" + formattedDate + "\\"+logFileName+"\\";
             Console.WriteLine("Creating working directory at " + directory);
             Directory.CreateDirectory(directory);
-            // Create log file
-            string logFile = directory + "run.log";
-            File.CreateText(logFile).Close();
-            File.AppendAllText(logFile, "Starting to write files.");
             foreach (Entry entry in harLog.Entries)
             {
                 Response resp = entry.Response;
                 Request req = entry.Request;
-                string fileName = (req.GetFileName() == null) ? "index.html" : req.GetFileName();
+                string fileName = req.GetFileName();
 
                 Console.WriteLine("\tProcessing " + fileName + " ("+resp.Content.MimeType+")");
                 // If status code is < 400 it's 200 or 300, ie: not an error
                 if (resp.Status < 400)
                 {
-                    if (resp.BodySize == 0)
-                    {
-                        Console.WriteLine("\t\tBody size is 0, file will be empty.\n");
-                    }
-                    // If the URL with the stripped protocol prefix is the same as the hostname, we know we don't have a file name
-                    // so we append a index.html as *some* file name is required
-                    string filePath;
-                    string strippedSrotocolString = StripProtocolPrefix(req.Url);
-                    if (req.GetHeaderValueByName("Host") == StripTrailingSlash(strippedSrotocolString))
-                    {
-                        filePath = directory + strippedSrotocolString + "\\" + "index.html";
-                    }
-                    else
-                    {
-                        filePath = directory + strippedSrotocolString;
-                    }
-                    
+                    // We keep the whole URL to build directory but need to remove special characters and query strings
+                    string cleanUrl = GetCleanUrl(req);
+                    string directoryPath = Path.GetDirectoryName(directory + cleanUrl);
+                    string filePath = directoryPath + "\\" + fileName;
                     // Windows as a limitation of 248 on path name and 260 for FQP so we truncate at 248
                     if (filePath.Length >= 248)
                     {
-                        File.AppendAllText(logFile, "File `" + filePath + "` was too long and was truncated to ");
-                        filePath = filePath.Substring(0, 248);
-                        File.AppendAllText(logFile, filePath + "\n");                        
-                    }
-                    
-                    string directoryPath = Path.GetDirectoryName(filePath);
-                    
-                    
-                    filePath = directoryPath + "\\" + fileName;
+                        Console.WriteLine("\t WARNING! Path was too long and had to be truncated for " + filePath);
+                        filePath = filePath.Substring(0, 248);                        
+                    }                        
 
                     if (!Directory.Exists(directoryPath))
-                    {
                         Directory.CreateDirectory(directoryPath);
-                    }
+
                     WriteFile(filePath, resp);
                 }
             }
         }
         private static void WriteFile(string path, Response resp)
         {
-            if (resp.IsText())
+            // We default to write to text (sometimes MIME Type is omitted)
+            if(resp.Content.MimeType == "" | resp.Content.MimeType == null )
+            {
+                Console.WriteLine("\tWARNING! Media Type not specified for " + Path.GetFileName(path) + ", will be written as text.");
+                resp.WriteContentToText(path);
+            }
+            else if (resp.IsText())
             {
                 resp.WriteContentToText(path);
             }
@@ -110,12 +100,25 @@ namespace HarA
                 if (resp.IsImage())
                 {
                     resp.WriteContentToImage(path);
-                }
+                }                
             }
         }
+        /// <summary>
+        /// Returns a the Request.Url property cleaned from any HTTP prefix, query string or special characters
+        /// </summary>
+        /// <returns></returns>
+        public static string GetCleanUrl(Request request)
+        {
+            string cleanString = request.StripQueryStringsFromUrl();
+            cleanString = StripProtocolPrefix(cleanString);
+            cleanString = StripTrailingSlash(cleanString);
+            cleanString = EscapeSpecialCharacters(cleanString);
+            return cleanString;
+        }
+
         private static string EscapeSpecialCharacters(string path)
         {
-            string ret = Regex.Replace(path, "[?!\\/*<>|]", "_", RegexOptions.None);
+            string ret = Regex.Replace(path, "[?!*<>|]", "_", RegexOptions.None);
             return ret.ToString();
         }
         /// <summary>

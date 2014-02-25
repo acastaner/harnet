@@ -51,6 +51,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="www.factornews.com.har">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="www.fsf.org.har">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
