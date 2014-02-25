@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Harnet.Tools;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -7,6 +9,8 @@ namespace Harnet.Net
 {
     public class Response
     {
+        #region Properties
+        #region HAR specification properties
         /// <summary>
         /// Response status.
         /// </summary>
@@ -47,6 +51,74 @@ namespace Harnet.Net
         /// A comment provided by the user or the application.
         /// </summary>
         public string Comment { get; set; }
+        #endregion
+        #endregion
+        #region Methods
+        /// <summary>
+        /// Returns whether or not the current response is of Media Type text, based on MIME Type
+        /// </summary>
+        /// <returns></returns>
+        public bool IsText()
+        {
+            bool isText = false;
+            MediaTypeHelper mt = new MediaTypeHelper();
 
+            // Put this in two different conditions to catch unknown Media Types
+            if (mt.Mappings.ContainsKey(Content.MimeType))
+            {
+                if(mt.Mappings[Content.MimeType] == MediaTypes.TEXT)
+                {
+                    isText = true;
+                }
+            }
+            else
+            {
+                throw new NotImplementedException("The provided Media Type ("+Content.MimeType+") is unknown.");
+            }
+
+            return isText;
+        }
+        /// <summary>
+        /// Returns whether or not the current response is of Media Type image, based on MIME Type
+        /// </summary>
+        /// <returns></returns>
+        public bool IsImage()
+        {
+            bool isImage = false;
+            MediaTypeHelper mt = new MediaTypeHelper();
+
+            // Put this in two different conditions to catch unknown Media Types
+            if (mt.Mappings.ContainsKey(Content.MimeType))
+            {
+                if (mt.Mappings[Content.MimeType] == MediaTypes.IMAGE)
+                {
+                    isImage = true;
+                }
+            }
+            else
+            {
+                throw new NotImplementedException("The provided Media Type (" + Content.MimeType + ") is unknown.");
+            }            
+            return isImage;
+        }
+        /// <summary>
+        /// Converts the Content.Text property of the response and write as an image. Path must be fully qualified, indluding file name.
+        /// </summary>
+        /// <param name="path"></param>
+        public void WriteContentToImage(string path)
+        {
+            Byte[] data = Convert.FromBase64String(Content.Text);
+            using (var dstFile = new FileStream(path, FileMode.Create))
+            {
+                dstFile.Write(data, 0, data.Length);
+                dstFile.Flush();
+            }
+        }
+
+        public void WriteContentToText(string path)
+        {
+            File.WriteAllText(path, Content.Text);
+        }
+        #endregion
     }
 }
