@@ -34,8 +34,7 @@ namespace HarA
                     Console.ReadKey();
                     return;
                 }                
-            }    
-            
+            }            
             Console.Write("Parsing complete. Press any key to exit.");
             Console.ReadKey();
         }
@@ -47,27 +46,36 @@ namespace HarA
             Console.WriteLine("Total Response size: " + datLog.CumulatedResponseSize + " bytes (headers: " + datLog.CumulatedResponseHeaderSize + " ; bodies: " + datLog.CumulatedResponseBodySize + " )");
             Console.WriteLine("Total Request size: " + datLog.CumulatedRequestSize + " bytes (headers: " + datLog.CumulatedRequestHeaderSize + " ; bodies: " + datLog.CumulatedRequestBodySize + " )");
             Console.WriteLine("Found " + datLog.Entries.Count + " entries in log.");
-            WriteReponseFiles(datLog, Path.GetFileName(filePath));
+            HandleLogFile(datLog, Path.GetFileName(filePath));
         }
-        private static void WriteReponseFiles(Log harLog, string logFileName)
+        
+        private static void HandleLogFile(Log harLog, string logFileName)
         {
-            string formattedDate = DateTime.Now.Month.ToString() + "-" + DateTime.Now.Day.ToString() + "-" + DateTime.Now.Year.ToString() + "_" + DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + "-" + DateTime.Now.Second.ToString();
-            string directory = Directory.GetCurrentDirectory() + "\\" + formattedDate + "\\"+logFileName+"\\";
-            Console.WriteLine("Creating working directory at " + directory);
-            Directory.CreateDirectory(directory);
+            DateTime date = DateTime.Now;
+            string formattedDate = date.Month.ToString() + "-" + date.Day.ToString() + "-" + date.Year.ToString() + "_" + date.Hour.ToString() + "-" + date.Minute.ToString() + "-" + date.Second.ToString();
+            string workingDirectory = Directory.GetCurrentDirectory() + "\\" + formattedDate + "\\"+logFileName+"\\";
+            List<string> urls = new List<string>();
+            urls.Add("### Parsed on " + date.ToString() + " ###");
+            
+            Console.WriteLine("Creating working directory at " + workingDirectory);
+            Directory.CreateDirectory(workingDirectory);            
+
             foreach (Entry entry in harLog.Entries)
             {
                 Response resp = entry.Response;
                 Request req = entry.Request;
+
+                // If there's no file in the URL (e.g. www.fsf.org), we force it to index.html
+                // We also have to add the hostname so that it's stored under the right directory (e.g. www.fsg.org\index.html) as is done for the other files
                 string fileName = (req.GetFileName() != null) ? req.GetFileName() : req.GetHeaderValueByName("Host") + "\\index.html";
 
                 Console.WriteLine("\tProcessing " + fileName + " ("+resp.Content.MimeType+")");
                 // If status code is < 400 it's 200 or 300, ie: not an error
                 if (resp.Status < 400)
                 {
-                    // We keep the whole URL to build directory but need to remove special characters and query strings
-                    
-                    string filePath = Path.GetDirectoryName(directory + GetCleanUrl(req)) + "\\" + fileName;
+                    // We keep the whole URL to build complete file path (directory + file name) but need to remove special characters and query strings not supported by the file system
+                    string filePath = Path.GetDirectoryName(workingDirectory + GetCleanUrl(req)) + "\\" + fileName;
+
                     // Windows as a limitation of 248 on path name and 260 for FQP so we truncate at 248
                     if (filePath.Length >= 248)
                     {
@@ -80,7 +88,9 @@ namespace HarA
                         Directory.CreateDirectory(storingDirectory);
 
                     WriteFile(filePath, resp);
+                    urls.Add(req.Url);
                 }
+                File.WriteAllLines(workingDirectory + "urls.txt", urls.ToArray());
             }
         }
         private static void WriteFile(string path, Response resp)
