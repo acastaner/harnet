@@ -87,7 +87,7 @@ namespace HarA
                     string directoryPath = Path.GetDirectoryName(filePath);
                     
                     // We make sure the file name doesn't contain special characters
-                    string fileName = EscapeSpecialCharacters(Path.GetFileName(filePath));
+                    string fileName = (req.GetFileName() == null) ? "index.html" : req.GetFileName();
                     filePath = directoryPath + "\\" + fileName;
 
                     if (!Directory.Exists(directoryPath))

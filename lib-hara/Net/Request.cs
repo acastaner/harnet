@@ -59,6 +59,28 @@ namespace Harnet.Net
             }
             return value;
         }
+        /// <summary>
+        /// Attempts to retrieve the filename from the request.
+        /// </summary>
+        /// <returns>Returns the filename. If no filename is found, returns null.</returns>
+        public string GetFileName()
+        {
+            string fileName = null;
+            // Isolate what's after the trailing slash and before any query string
+            int index = this.Url.LastIndexOf("/");
+
+            // If difference between index and length is < 1, it means we have no file name
+            // e.g.: http://www.fsf.org/
+            int diff = Url.Length - index;
+            if (index > 0 && diff > 1)
+            {
+                fileName = this.Url.Substring(index +1, diff -1);
+                // If we have query strings we remove them too
+                if (this.QueryStrings.Count > 1)
+                    fileName = fileName.Substring(0, fileName.IndexOf("?"));
+            }
+            return fileName;
+        }
         #endregion
     }
 }
