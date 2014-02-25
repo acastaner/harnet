@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Harnet.Net
 {
@@ -66,21 +67,36 @@ namespace Harnet.Net
         public string GetFileName()
         {
             string fileName = null;
+
+            // If we have query strings we remove them first because sometimes they get funky
+            if (this.QueryStrings.Count >= 1)
+                {
+                    fileName = StripQueryStringsFromUrl();
+                }
+            else
+                fileName = Url;
+
             // Isolate what's after the trailing slash and before any query string
-            int index = this.Url.LastIndexOf("/");
+            int index = fileName.LastIndexOf("/");
 
             // If difference between index and length is < 1, it means we have no file name
             // e.g.: http://www.fsf.org/
-            int diff = Url.Length - index;
+            int diff = fileName.Length - index;
             if (index > 0 && diff > 1)
-            {
-                fileName = this.Url.Substring(index +1, diff -1);
-                // If we have query strings we remove them too
-                if (this.QueryStrings.Count > 1)
-                    fileName = fileName.Substring(0, fileName.IndexOf("?"));
-            }
+                fileName = fileName.Substring(index +1, diff - 1);
+            else
+                fileName = "index.html";
             return fileName;
         }
         #endregion
+
+        public string StripQueryStringsFromUrl()
+        {
+            int indexOf = Url.IndexOf("?");
+            if (indexOf >= 1)
+                return Url.Substring(0, indexOf);
+            else
+                return Url;
+        }        
     }
 }
