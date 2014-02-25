@@ -55,7 +55,9 @@ namespace HarA
             {
                 Response resp = entry.Response;
                 Request req = entry.Request;
-                Console.WriteLine("\tProcessing " + req.Url);
+                string fileName = (req.GetFileName() == null) ? "index.html" : req.GetFileName();
+
+                Console.WriteLine("\tProcessing " + fileName + " ("+resp.Content.MimeType+")");
                 // If status code is < 400 it's 200 or 300, ie: not an error
                 if (resp.Status < 400)
                 {
@@ -86,21 +88,30 @@ namespace HarA
                     
                     string directoryPath = Path.GetDirectoryName(filePath);
                     
-                    // We make sure the file name doesn't contain special characters
-                    string fileName = (req.GetFileName() == null) ? "index.html" : req.GetFileName();
+                    
                     filePath = directoryPath + "\\" + fileName;
 
                     if (!Directory.Exists(directoryPath))
                     {
                         Directory.CreateDirectory(directoryPath);
-                    }                    
-                    File.WriteAllText(filePath, resp.Content.Text);
+                    }
+                    WriteFile(filePath, resp);
                 }
             }
         }
-        private static void WriteFile(string path, string content, string mimeType)
+        private static void WriteFile(string path, Response resp)
         {
-            
+            if (resp.IsText())
+            {
+                resp.WriteContentToText(path);
+            }
+            else
+            {
+                if (resp.IsImage())
+                {
+                    resp.WriteContentToImage(path);
+                }
+            }
         }
         private static string EscapeSpecialCharacters(string path)
         {
