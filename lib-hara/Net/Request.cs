@@ -85,7 +85,7 @@ namespace Harnet.Net
             if (index > 0 && diff > 1)
                 fileName = fileName.Substring(index +1, diff - 1);
             else
-                fileName = "index.html";
+                fileName = null;
             return fileName;
         }
         #endregion

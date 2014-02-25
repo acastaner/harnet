@@ -59,25 +59,25 @@ namespace HarA
             {
                 Response resp = entry.Response;
                 Request req = entry.Request;
-                string fileName = req.GetFileName();
+                string fileName = (req.GetFileName() != null) ? req.GetFileName() : req.GetHeaderValueByName("Host") + "\\index.html";
 
                 Console.WriteLine("\tProcessing " + fileName + " ("+resp.Content.MimeType+")");
                 // If status code is < 400 it's 200 or 300, ie: not an error
                 if (resp.Status < 400)
                 {
                     // We keep the whole URL to build directory but need to remove special characters and query strings
-                    string cleanUrl = GetCleanUrl(req);
-                    string directoryPath = Path.GetDirectoryName(directory + cleanUrl);
-                    string filePath = directoryPath + "\\" + fileName;
+                    
+                    string filePath = Path.GetDirectoryName(directory + GetCleanUrl(req)) + "\\" + fileName;
                     // Windows as a limitation of 248 on path name and 260 for FQP so we truncate at 248
                     if (filePath.Length >= 248)
                     {
                         Console.WriteLine("\t WARNING! Path was too long and had to be truncated for " + filePath);
                         filePath = filePath.Substring(0, 248);                        
-                    }                        
+                    }
 
-                    if (!Directory.Exists(directoryPath))
-                        Directory.CreateDirectory(directoryPath);
+                    string storingDirectory = Path.GetDirectoryName(filePath);
+                    if (!Directory.Exists(storingDirectory))
+                        Directory.CreateDirectory(storingDirectory);
 
                     WriteFile(filePath, resp);
                 }
