@@ -55,7 +55,7 @@ namespace Harnet.Net
         #endregion
         #region Methods
         /// <summary>
-        /// Returns whether or not the current response is of Media Type text, based on MIME Type
+        /// Returns whether or not the current response is of Media Type text, based on MIME Type.
         /// </summary>
         /// <returns></returns>
         public bool IsText()
@@ -79,7 +79,7 @@ namespace Harnet.Net
             return isText;
         }
         /// <summary>
-        /// Returns whether or not the current response is of Media Type image, based on MIME Type
+        /// Returns whether or not the current response is of Media Type image, based on MIME Type.
         /// </summary>
         /// <returns></returns>
         public bool IsImage()
@@ -102,7 +102,7 @@ namespace Harnet.Net
             return isImage;
         }
         /// <summary>
-        /// Converts the Content.Text property of the response and write as an image. Path must be fully qualified, indluding file name.
+        /// Writes the content of this response as an image to the specified path, including the file name.
         /// </summary>
         /// <param name="path"></param>
         public void WriteContentToImage(string path)
@@ -114,7 +114,10 @@ namespace Harnet.Net
                 dstFile.Flush();
             }
         }
-
+        /// <summary>
+        /// Writes the content of this response to the specified path, including the file name.
+        /// </summary>
+        /// <param name="path"></param>
         public void WriteContentToText(string path)
         {
             File.WriteAllText(path, Content.Text);
