@@ -103,7 +103,7 @@ namespace Harnet
                 FileName = paramDto.filename,
                 ContentType = paramDto.contenttype,
                 Comment = paramDto.comment
-            }
+            };
         }
 
         public static Request FromDto(this RequestDto requestDto)
