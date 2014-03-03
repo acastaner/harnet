@@ -32,7 +32,7 @@ namespace Harnet.Net
         /// <summary>
         /// List of cookie objects.
         /// </summary>
-        public List<string> Cookies { get; set; }
+        public Dictionary<string, string> Cookies { get; set; }
         /// <summary>
         /// Total number of bytes from the start of the HTTP request message until (and including) the double CRLF before the body. Set to -1 if the info is not available.
         /// </summary>

@@ -113,10 +113,9 @@ namespace Harnet
                 Method = requestDto.method,
                 Url = requestDto.url,
                 HttpVersion = requestDto.httpVersion,
-                //Headers = ObjectListToStringList(requestDto.headers),
-                Headers = HeaderListToDictionary(requestDto.headers),
+                Headers = ObjectListToDictionary(requestDto.headers),
                 QueryStrings = ObjectListToStringList(requestDto.queryString),
-                Cookies = ObjectListToStringList(requestDto.cookies),
+                Cookies = ObjectListToDictionary(requestDto.cookies),
                 HeaderSize = requestDto.headersSize,
                 BodySize = requestDto.bodySize,
                 PostData = (requestDto.postData != null) ? requestDto.postData.FromDto() : null,
@@ -228,11 +227,11 @@ namespace Harnet
             }
         }
 
-        private static Dictionary<string, string> HeaderListToDictionary(List<object> headers)
+        private static Dictionary<string, string> ObjectListToDictionary(List<object> objects)
         {
             Dictionary<string, string> hd = new Dictionary<string, string>();
             // TODO something faster could probably be done
-            foreach (object header in headers)
+            foreach (object header in objects)
             {
                 var jobj = (JObject)JsonConvert.DeserializeObject(header.ToString());
                 hd.Add(jobj["name"].ToString(), jobj["value"].ToString());
