@@ -29,6 +29,7 @@ namespace Harnet.Tools
             Mappings.Add("text/javascript", MediaTypes.TEXT);
             Mappings.Add("application/x-javascript", MediaTypes.TEXT);  // Even though this is an "application" media type, it's actually plain text so we need to flag it as such. WTF, Javascript...
             Mappings.Add("application/javascript", MediaTypes.TEXT);    // Same as application/javascript
+            Mappings.Add("application/json", MediaTypes.TEXT);         // JSON is similar
             Mappings.Add("text/plain", MediaTypes.TEXT);
             Mappings.Add("text/richtext", MediaTypes.TEXT);
             Mappings.Add("text/tab-separated-values", MediaTypes.TEXT);            
