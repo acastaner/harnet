@@ -102,10 +102,25 @@ namespace Harnet.Net
             return isImage;
         }
         /// <summary>
-        /// Writes the content of this response as an image to the specified path, including the file name.
+        /// Writes the content of this response as an image to the specified path, if the reponse is an image.
         /// </summary>
         /// <param name="path"></param>
-        public void WriteContentToImage(string path)
+        public void WriteToImage(string path)
+        {
+            if (this.IsImage())
+            {
+                ForceWriteToImage(path);
+            }
+            else
+            {
+                throw new Exception("According to its Media Type, this response is not an image. Ensure Media Type, or use ForceWriteToImage() to write.");
+            }
+        }
+        /// <summary>
+        /// Writes the content of this response as an image to the specificied path without checking for its Media Type.
+        /// </summary>
+        /// <param name="path"></param>
+        public void ForceWriteToImage(string path)
         {
             Byte[] data = Convert.FromBase64String(Content.Text);
             using (var dstFile = new FileStream(path, FileMode.Create))
@@ -121,6 +136,22 @@ namespace Harnet.Net
         public void WriteContentToText(string path)
         {
             File.WriteAllText(path, Content.Text);
+        }
+        /// <summary>
+        /// Returns whether or not this request contains headers.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasHeaders()
+        {
+            return (this.Headers.Count > 0) ? true : false;
+        }
+        /// <summary>
+        /// Returns whether or not this request contains headers.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasCookies()
+        {
+            return (this.Cookies.Count > 0) ? true : false;
         }
         #endregion
     }

@@ -90,6 +90,10 @@ namespace Harnet.Net
         }
         #endregion
 
+        /// <summary>
+        /// Strips the Url of all query strings and returns it (e.g. www.fsf.org/index.html?foo=bar returns www.fsg.org/index.html).
+        /// </summary>
+        /// <returns></returns>
         public string StripQueryStringsFromUrl()
         {
             int indexOf = Url.IndexOf("?");
@@ -97,6 +101,30 @@ namespace Harnet.Net
                 return Url.Substring(0, indexOf);
             else
                 return Url;
-        }        
+        }
+        /// <summary>
+        /// Returns whether or not this request contains cookies.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasCookies()
+        {
+            return (this.Cookies.Count > 0) ? true : false;
+        }
+        /// <summary>
+        /// Returns whether or not this request contains headers.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasHeaders()
+        {
+            return (this.Headers.Count > 0) ? true : false;
+        }
+        /// <summary>
+        /// Returns whether or not this request contains query strings.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasQueryStrings()
+        {
+            return (this.QueryStrings.Count > 0) ? true : false;
+        }
     }
 }
