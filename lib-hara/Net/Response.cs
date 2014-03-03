@@ -26,11 +26,11 @@ namespace Harnet.Net
         /// <summary>
         /// List of header objects.
         /// </summary>
-        public List<string> Headers { get; set; }
+        public Dictionary<string, string> Headers { get; set; }
         /// <summary>
         /// List of cookie objects.
         /// </summary>
-        public List<string> Cookies { get; set; }
+        public Dictionary<string, string> Cookies { get; set; }
         /// <summary>
         /// Details about the response body.
         /// </summary>

@@ -28,7 +28,7 @@ namespace Harnet.Net
         /// <summary>
         /// List of query parameter objects.
         /// </summary>
-        public List<string> QueryStrings { get; set; }
+        public Dictionary<string, string> QueryStrings { get; set; }
         /// <summary>
         /// List of cookie objects.
         /// </summary>
