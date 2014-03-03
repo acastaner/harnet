@@ -27,7 +27,7 @@ namespace Harnet
         {
             return new Log
             {
-                Version = double.Parse(logDto.version, CultureInfo.InvariantCulture.NumberFormat),
+                Version = float.Parse(logDto.version, CultureInfo.InvariantCulture.NumberFormat),
                 Creator = logDto.creator.FromDto(),
                 Pages = PageDtoListToPageList(logDto.pages),
                 Entries = EntryDtoListToEntryList(logDto.entries),
@@ -41,10 +41,9 @@ namespace Harnet
             return new Browser
             {
                 Name = browserDto.name,
-                Version = double.Parse(browserDto.version, CultureInfo.InvariantCulture.NumberFormat),
+                Version = float.Parse(browserDto.version, CultureInfo.InvariantCulture.NumberFormat),
                 Comment = browserDto.comment
-            };
-            
+            };            
         }
 
         public static Creator FromDto(this CreatorDto creatorDto)
@@ -52,7 +51,7 @@ namespace Harnet
             return new Creator
             {
                 Name = creatorDto.name,
-                Version = double.Parse(creatorDto.version, CultureInfo.InvariantCulture.NumberFormat),
+                Version = float.Parse(creatorDto.version, CultureInfo.InvariantCulture.NumberFormat),
                 Comment = creatorDto.comment
             };
         }
@@ -81,12 +80,30 @@ namespace Harnet
 
         public static PostData FromDto(this PostDataDto postDataDto)
         {
+            List<Param> paramList = new List<Param>();
+            foreach (ParamDto paramDto in postDataDto.@params)
+            {
+                paramList.Add(paramDto.FromDto());
+            }
             return new PostData()
             {
                 MimeType = postDataDto.mimeType,
-                Text = postDataDto.text
+                Text = postDataDto.text,
+                Comment = postDataDto.comment,
+                Params = paramList
             };
+        }
 
+        public static Param FromDto(this ParamDto paramDto)
+        {
+            return new Param()
+            {
+                Name = paramDto.name,
+                Value = paramDto.value,
+                FileName = paramDto.filename,
+                ContentType = paramDto.contenttype,
+                Comment = paramDto.comment
+            }
         }
 
         public static Request FromDto(this RequestDto requestDto)

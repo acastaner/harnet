@@ -19,7 +19,7 @@ namespace Harnet.Net
         /// <summary>
         /// Required. The version number of the browser that created the log.
         /// </summary>
-        public double Version { get; set; }
+        public float Version { get; set; }
         /// <summary>
         /// Optional. A comment provided by the user or the browser.
         /// </summary>
@@ -27,7 +27,7 @@ namespace Harnet.Net
         #endregion
         #region Constructors
         public Browser() { }
-        public Browser(string name, double version)
+        public Browser(string name, float version)
         {
             Name = name;
             Version = version;
@@ -35,7 +35,7 @@ namespace Harnet.Net
         public Browser(string name, string version)
         {
             Name = name;
-            Version = double.Parse(version);
+            Version = float.Parse(version);
         }
         #endregion
     }

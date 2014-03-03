@@ -19,7 +19,7 @@ namespace Harnet.Net
         /// <summary>
         /// Required. The version number of the application that created the log.
         /// </summary>
-        public double Version { get; set; }
+        public float Version { get; set; }
         /// <summary>
         /// Optional. A comment provided by the user or the application.
         /// </summary>
@@ -35,9 +35,9 @@ namespace Harnet.Net
         public Creator(string name, string version)
         {
             Name = name;
-            Version = double.Parse(version);
+            Version = float.Parse(version);
         }
-        public Creator(string name, double version)
+        public Creator(string name, float version)
         {
             Name = name;
             Version = version;

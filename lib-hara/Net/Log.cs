@@ -24,7 +24,7 @@ namespace Harnet.Net
         /// <summary>
         /// Required. Version number of the format.
         /// </summary>
-        public double Version { get; set; }
+        public float Version { get; set; }
         /// <summary>
         /// Required. An object of type creator that contains the name and version information of the log creator application.
         /// </summary>

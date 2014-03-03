@@ -9,9 +9,7 @@ namespace Harnet.Net
     {
         public string MimeType { get; set; }
         public string Text { get; set; }
-        /* TODO
-         * params
-         * comment
-         * */
+        public List<Param> Params { get; set; }
+        public string Comment { get; set; }
     }
 }
