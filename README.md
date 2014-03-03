@@ -10,4 +10,4 @@ This project aims to provide a free .NET library. This library relies on Newtons
 License
 =======
 
-HarNet is released under GNU Lesser General Public License v2.1 (LGPL-2.1). Please refer to the LICENSE file for more details. For a short version of the license, go to: https://tldrlegal.com/license/gnu-lesser-general-public-license-v2.1-(lgpl-2.1)
+HarNet is released under GNU Lesser General Public License v3 (LGPL-3).
