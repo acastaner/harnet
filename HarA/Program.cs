@@ -17,26 +17,37 @@ namespace HarA
     {
         static void Main(string[] args)
         {
-            if (args.Length == 0)
+            string[] filePaths = {};
+            // Check for command-line arguments
+            if (args.Length != 0)
             {
-                string[] filePaths = Directory.GetFiles(@".", "*.har");
-                // Using this for dev to make things easier
-                if (filePaths.Length >= 1)
-                {
-                    foreach (string path in filePaths)
-                    {
-                        HandleHarFile(path);
-                    }
-                }
+                string checkForPath = args[0];
+                if (Directory.Exists(checkForPath))
+                    filePaths = Directory.GetFiles(checkForPath, "*.har");
+                else if (File.Exists(checkForPath))
+                    filePaths = new string[] { checkForPath };
                 else
+                    Console.WriteLine("File not found or no .har file found in specified directory.");
+            }
+            // If no command-line arguments, look for .har files in current directory
+            else
+            {
+                filePaths = Directory.GetFiles(@".", "*.har");
+            }
+
+            if (filePaths.Length >= 1)
+            {
+                foreach (string path in filePaths)
                 {
-                    Console.WriteLine("No HAR file provided. Press any key to exit.");
-                    Console.ReadKey();
-                    return;
-                }                
-            }            
-            Console.Write("Parsing complete. Press any key to exit.");
-            Console.ReadKey();
+                    HandleHarFile(path);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No file found in working directory.");
+            }
+        Console.Write("Parsing complete. Press any key to exit.");
+        Console.ReadKey();
         }
 
         private static void HandleHarFile(string filePath)
@@ -109,7 +120,7 @@ namespace HarA
             {
                 if (resp.IsImage())
                 {
-                    resp.WriteContentToImage(path);
+                    resp.WriteToImage(path);
                 }                
             }
         }
