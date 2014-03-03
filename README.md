@@ -1,4 +1,4 @@
-hara
-====
+harnet
+======
 
-Library for parsing HTTP Archive files (HAR) as .NET objects
+.NET Library for handling HTTP Archive files
