@@ -113,9 +113,9 @@ namespace Harnet
                 Method = requestDto.method,
                 Url = requestDto.url,
                 HttpVersion = requestDto.httpVersion,
-                Headers = ObjectListToDictionary(requestDto.headers),
-                QueryStrings = ObjectListToDictionary(requestDto.queryString),
-                Cookies = ObjectListToDictionary(requestDto.cookies),
+                Headers = ObjectListToDictionaryValueList(requestDto.headers),
+                QueryStrings = ObjectListToDictionaryValueList(requestDto.queryString),
+                Cookies = ObjectListToDictionaryValueList(requestDto.cookies),
                 HeaderSize = requestDto.headersSize,
                 BodySize = requestDto.bodySize,
                 PostData = (requestDto.postData != null) ? requestDto.postData.FromDto() : null,
@@ -142,8 +142,8 @@ namespace Harnet
                 Status = responseDto.status,
                 StatusText = responseDto.statusText,
                 HttpVersion = responseDto.httpVersion,
-                Headers = ObjectListToDictionary(responseDto.headers),
-                Cookies = ObjectListToDictionary(responseDto.cookies),
+                Headers = ObjectListToDictionaryValueList(responseDto.headers),
+                Cookies = ObjectListToDictionaryValueList(responseDto.cookies),
                 Content = responseDto.content.FromDto(),
                 RedirectUrl = responseDto.redirectURL,
                 HeadersSize = responseDto.headersSize,
@@ -229,15 +229,33 @@ namespace Harnet
 
         private static Dictionary<string, string> ObjectListToDictionary(List<object> objects)
         {
-            Dictionary<string, string> hd = new Dictionary<string, string>();
-            // TODO something faster could probably be done
-            foreach (object header in objects)
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            foreach (object obj in objects)
             {
-                var jobj = (JObject)JsonConvert.DeserializeObject(header.ToString());
-                hd.Add(jobj["name"].ToString(), jobj["value"].ToString());
-                
+                var jobj = (JObject)JsonConvert.DeserializeObject(obj.ToString());
+                dictionary.Add(jobj["name"].ToString(), jobj["value"].ToString());
             }
-            return hd;
+            return dictionary;
+        }
+
+        private static Dictionary<string, List<string>> ObjectListToDictionaryValueList(List<object> objects)
+        {
+            Dictionary<string, List<string>> dictionary = new Dictionary<string, List<string>>();
+            foreach (object obj in objects)
+            {
+                var jobj = (JObject)JsonConvert.DeserializeObject(obj.ToString());
+                string keyName = jobj["name"].ToString();
+                List<string> values;
+                
+                if (dictionary.ContainsKey(keyName))
+                    values = dictionary[keyName];
+                else
+                    values = new List<string>();
+                
+                values.Add(jobj["value"].ToString());
+                dictionary[keyName] = values;
+            }
+            return dictionary;
         }
 
         private static List<string> ObjectListToStringList(List<object> objects)

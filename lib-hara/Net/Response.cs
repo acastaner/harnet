@@ -26,11 +26,11 @@ namespace Harnet.Net
         /// <summary>
         /// List of header objects.
         /// </summary>
-        public Dictionary<string, string> Headers { get; set; }
+        public Dictionary<string, List<string>> Headers { get; set; }
         /// <summary>
         /// List of cookie objects.
         /// </summary>
-        public Dictionary<string, string> Cookies { get; set; }
+        public Dictionary<string, List<string>> Cookies { get; set; }
         /// <summary>
         /// Details about the response body.
         /// </summary>
@@ -133,7 +133,7 @@ namespace Harnet.Net
         /// Writes the content of this response to the specified path, including the file name.
         /// </summary>
         /// <param name="path"></param>
-        public void WriteContentToText(string path)
+        public void WriteToText(string path)
         {
             File.WriteAllText(path, Content.Text);
         }

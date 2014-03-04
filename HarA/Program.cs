@@ -78,7 +78,7 @@ namespace HarA
 
                 // If there's no file in the URL (e.g. www.fsf.org), we force it to index.html
                 // We also have to add the hostname so that it's stored under the right directory (e.g. www.fsg.org\index.html) as is done for the other files
-                string fileName = (req.GetFileName() != null) ? req.GetFileName() : req.GetHeaderValueByName("Host") + "\\index.html";
+                string fileName = (req.GetFileName() != null) ? req.GetFileName() : req.GetHeaderValueByHeaderName("Host").FirstOrDefault() + "\\index.html";
 
                 Console.WriteLine("\tProcessing " + fileName + " ("+resp.Content.MimeType+")");
                 // If status code is < 400 it's 200 or 300, ie: not an error
@@ -110,11 +110,11 @@ namespace HarA
             if(resp.Content.MimeType == "" | resp.Content.MimeType == null )
             {
                 Console.WriteLine("\tWARNING! Media Type not specified for " + Path.GetFileName(path) + ", will be written as text.");
-                resp.WriteContentToText(path);
+                resp.WriteToText(path);
             }
             else if (resp.IsText())
             {
-                resp.WriteContentToText(path);
+                resp.WriteToText(path);
             }
             else
             {

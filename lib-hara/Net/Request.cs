@@ -24,15 +24,15 @@ namespace Harnet.Net
         /// <summary>
         /// List of header objects.
         /// </summary>
-        public Dictionary<string, string> Headers { get; set; }
+        public Dictionary<string, List<string>> Headers { get; set; }
         /// <summary>
         /// List of query parameter objects.
         /// </summary>
-        public Dictionary<string, string> QueryStrings { get; set; }
+        public Dictionary<string, List<string>> QueryStrings { get; set; }
         /// <summary>
         /// List of cookie objects.
         /// </summary>
-        public Dictionary<string, string> Cookies { get; set; }
+        public Dictionary<string, List<string>> Cookies { get; set; }
         /// <summary>
         /// Total number of bytes from the start of the HTTP request message until (and including) the double CRLF before the body. Set to -1 if the info is not available.
         /// </summary>
@@ -51,9 +51,9 @@ namespace Harnet.Net
         public string Comment { get; set; }
         #endregion
         #region Methods
-        public string GetHeaderValueByName(string name)
+        public List<string> GetHeaderValueByHeaderName(string name)
         {
-            string value = null;
+            List<string> value = null;
             if (Headers.ContainsKey(name))
             {
                 value = Headers[name];
@@ -88,8 +88,7 @@ namespace Harnet.Net
                 fileName = null;
             return fileName;
         }
-        #endregion
-
+        
         /// <summary>
         /// Strips the Url of all query strings and returns it (e.g. www.fsf.org/index.html?foo=bar returns www.fsg.org/index.html).
         /// </summary>
@@ -126,5 +125,6 @@ namespace Harnet.Net
         {
             return (this.QueryStrings.Count > 0) ? true : false;
         }
+        #endregion
     }
 }
