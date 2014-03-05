@@ -75,6 +75,7 @@ namespace Harnet.Tools
             Mappings.Add("image/gif", MediaTypes.IMAGE);
             Mappings.Add("image/ief", MediaTypes.IMAGE);
             Mappings.Add("image/jpeg", MediaTypes.IMAGE);
+            Mappings.Add("image/jpg", MediaTypes.IMAGE);
             Mappings.Add("image/png", MediaTypes.IMAGE);            
             Mappings.Add("image/tiff", MediaTypes.IMAGE);            
             Mappings.Add("image/webp", MediaTypes.IMAGE);
