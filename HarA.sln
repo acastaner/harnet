@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarA", "HarA\HarA.csproj", "{9710384D-A984-4FD3-AA74-D2DD61313E0D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demo", "demo\demo.csproj", "{9710384D-A984-4FD3-AA74-D2DD61313E0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harnet", "lib-hara\Harnet.csproj", "{0A0D2B81-8481-4BA2-B00A-8D3DD111E365}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harnet", "harnet\Harnet.csproj", "{0A0D2B81-8481-4BA2-B00A-8D3DD111E365}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
