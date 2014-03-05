@@ -48,7 +48,7 @@ namespace Harnet.Net
         /// <summary>
         /// Unique ID of the parent TCP/IP connection, can be the client port number. Note that a port number doesn't have to be unique identifier in cases where the port is shared for more connections. If the port isn't available for the application, any other unique connection ID can be used instead (e.g. connection index). Leave out this field if the application doesn't support this info.
         /// </summary>
-        public string Connection { get; set; }
+        public int Connection { get; set; }
         /// <summary>
         /// A comment provided by the user or the application.
         /// </summary>

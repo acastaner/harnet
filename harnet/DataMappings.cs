@@ -211,7 +211,7 @@ namespace Harnet
                 Response = entryDto.response.FromDto(),
                 Cache = (entryDto.cache != null) ? entryDto.cache.FromDto() : null,
                 Timings = entryDto.timings.FromDto(),
-                Connection = entryDto.connection
+                Connection = (entryDto.connection != null) ? int.Parse(entryDto.connection) : 0
             };
         }
 
