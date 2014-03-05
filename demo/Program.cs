@@ -37,9 +37,13 @@ namespace HarA
 
             if (filePaths.Length >= 1)
             {
+                DateTime date = DateTime.Now;
+                string formattedDate = date.Month.ToString() + "-" + date.Day.ToString() + "-" + date.Year.ToString() + "_" + date.Hour.ToString() + "-" + date.Minute.ToString() + "-" + date.Second.ToString();
+                string workingDirectory = Directory.GetCurrentDirectory() + "\\" + formattedDate + "\\";
+                
                 foreach (string path in filePaths)
                 {
-                    HandleHarFile(path);
+                    HandleHarFile(workingDirectory, path);
                 }
             }
             else
@@ -50,32 +54,35 @@ namespace HarA
         Console.ReadKey();
         }
 
-        private static void HandleHarFile(string filePath)
+        private static void HandleHarFile(string workingDirectory, string filePath)
         {
             string content = File.ReadAllText(filePath);
             Log datLog = HarConverter.ImportHarContent(content);
             Console.WriteLine("Total Response size: " + datLog.CumulatedResponseSize + " bytes (headers: " + datLog.CumulatedResponseHeaderSize + " ; bodies: " + datLog.CumulatedResponseBodySize + " )");
             Console.WriteLine("Total Request size: " + datLog.CumulatedRequestSize + " bytes (headers: " + datLog.CumulatedRequestHeaderSize + " ; bodies: " + datLog.CumulatedRequestBodySize + " )");
             Console.WriteLine("Found " + datLog.Entries.Count + " entries in log.");
-            HandleLogFile(datLog, Path.GetFileName(filePath));
+            HandleLogFile(datLog, workingDirectory, Path.GetFileName(filePath));
         }
         
-        private static void HandleLogFile(Log harLog, string logFileName)
+        private static void HandleLogFile(Log harLog, string workingDirectory, string logFileName)
         {
-            DateTime date = DateTime.Now;
-            string formattedDate = date.Month.ToString() + "-" + date.Day.ToString() + "-" + date.Year.ToString() + "_" + date.Hour.ToString() + "-" + date.Minute.ToString() + "-" + date.Second.ToString();
-            string workingDirectory = Directory.GetCurrentDirectory() + "\\" + formattedDate + "\\"+logFileName+"\\";
+            workingDirectory += logFileName+"\\";
             List<string> urls = new List<string>();
-            urls.Add("### Parsed on " + date.ToString() + " ###");
+            List<string> actionList = new List<string>();
+            
+            actionList.Add("### Generated on " + DateTime.Now + " by HarHar tool ###");
             
             Console.WriteLine("Creating working directory at " + workingDirectory);
-            Directory.CreateDirectory(workingDirectory);            
+            Directory.CreateDirectory(workingDirectory);
+
+            // Used for Avalanche Action List
+            int previousConnectionId = 0;
 
             foreach (Entry entry in harLog.Entries)
             {
                 Response resp = entry.Response;
                 Request req = entry.Request;
-
+                
                 // If there's no file in the URL (e.g. www.fsf.org), we force it to index.html
                 // We also have to add the hostname so that it's stored under the right directory (e.g. www.fsg.org\index.html) as is done for the other files
                 string fileName = (req.GetFileName() != null) ? req.GetFileName() : req.GetHeaderValueByHeaderName("Host").FirstOrDefault() + "\\index.html";
@@ -99,10 +106,36 @@ namespace HarA
                         Directory.CreateDirectory(storingDirectory);
 
                     WriteFile(filePath, resp);
+                    actionList.Add(AddAction(entry, previousConnectionId));
                     urls.Add(req.Url);
                 }
                 File.WriteAllLines(workingDirectory + "urls.txt", urls.ToArray());
+                File.WriteAllLines(workingDirectory + "action_list.txt", actionList.ToArray());
             }
+        }
+        private static string AddAction(Entry entry, int previousConnectionId)
+        {
+            string action = "";
+
+            // If first connection (0) or same as before, we use a level 1 action
+            if (entry.Connection == previousConnectionId || previousConnectionId == 0)
+                action += "1 ";
+            else
+                action += "2 ";
+
+            action += entry.Request.Method + " " + entry.Request.Url;
+
+            if (entry.Request.Headers.Count >= 1)
+            {
+                foreach (var pair in entry.Request.Headers)
+                {
+                    for (int i = 0; i < pair.Value.Count; i++)
+                    {
+                        action += " <ADDITIONAL_HEADER=\"" + pair.Key + ": " + pair.Value[i] + "\">";
+                    }
+                }
+            }
+            return action;
         }
         private static void WriteFile(string path, Response resp)
         {
