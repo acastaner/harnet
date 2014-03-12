@@ -70,6 +70,7 @@ namespace Harnet.Tools
             Mappings.Add("application/wita", MediaTypes.APPLICATION);
             Mappings.Add("application/wordperfect5.1", MediaTypes.APPLICATION);
             Mappings.Add("application/zip", MediaTypes.APPLICATION);
+            Mappings.Add("application/x-shockwave-flash", MediaTypes.APPLICATION);
             
             // Image
             Mappings.Add("image/gif", MediaTypes.IMAGE);
