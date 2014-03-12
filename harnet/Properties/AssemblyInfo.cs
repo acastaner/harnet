@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Harnet")]
 [assembly: AssemblyDescription(".NET Library for parsing HTTP Archive files")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Arnaud Castaner")]
 [assembly: AssemblyProduct("Harnet")]
-[assembly: AssemblyCopyright("LGPL 2.1")]
+[assembly: AssemblyCopyright("LGPL 3.0")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
