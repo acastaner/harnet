@@ -55,6 +55,7 @@ namespace Harnet.Tools
             Mappings.Add("application/atomicmail", MediaTypes.APPLICATION);            
             Mappings.Add("application/dca-rft", MediaTypes.APPLICATION);
             Mappings.Add("application/dec-dx", MediaTypes.APPLICATION);
+            Mappings.Add("application/font-woff", MediaTypes.APPLICATION);
             Mappings.Add("application/mac-binhex40", MediaTypes.APPLICATION);
             Mappings.Add("application/macwriteii", MediaTypes.APPLICATION);
             Mappings.Add("application/msword", MediaTypes.APPLICATION);
@@ -71,6 +72,8 @@ namespace Harnet.Tools
             Mappings.Add("application/wordperfect5.1", MediaTypes.APPLICATION);
             Mappings.Add("application/zip", MediaTypes.APPLICATION);
             Mappings.Add("application/x-shockwave-flash", MediaTypes.APPLICATION);
+
+            Mappings.Add("font/woff", MediaTypes.APPLICATION); // This should be application/font-woff but some servers will return this
             
             // Image
             Mappings.Add("image/gif", MediaTypes.IMAGE);
