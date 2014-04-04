@@ -27,12 +27,15 @@ namespace Harnet.Tools
             Mappings.Add("text/css", MediaTypes.TEXT);
             Mappings.Add("text/html", MediaTypes.TEXT);
             Mappings.Add("text/javascript", MediaTypes.TEXT);
-            Mappings.Add("application/x-javascript", MediaTypes.TEXT);  // Even though this is an "application" media type, it's actually plain text so we need to flag it as such. WTF, Javascript...
-            Mappings.Add("application/javascript", MediaTypes.TEXT);    // Same as application/javascript
-            Mappings.Add("application/json", MediaTypes.TEXT);         // JSON is similar
+            Mappings.Add("application/x-javascript", MediaTypes.TEXT);  // Is actually text
+            Mappings.Add("application/javascript", MediaTypes.TEXT);    // Is actually text
+            Mappings.Add("application/json", MediaTypes.TEXT);          // Is actually text
             Mappings.Add("text/plain", MediaTypes.TEXT);
             Mappings.Add("text/richtext", MediaTypes.TEXT);
-            Mappings.Add("text/tab-separated-values", MediaTypes.TEXT);            
+            Mappings.Add("text/tab-separated-values", MediaTypes.TEXT);
+            Mappings.Add("text/xml", MediaTypes.TEXT);
+            Mappings.Add("application/xml", MediaTypes.TEXT);           // Is actually text
+            Mappings.Add("application/rss+xml", MediaTypes.TEXT);       // Is actually text
 
             // Multipart
             Mappings.Add("multipart/alternative", MediaTypes.MULTIPART);
@@ -65,6 +68,7 @@ namespace Harnet.Tools
             Mappings.Add("application/pdf", MediaTypes.APPLICATION);
             Mappings.Add("application/postscript", MediaTypes.APPLICATION);
             Mappings.Add("application/remote-printing", MediaTypes.APPLICATION);
+            
             Mappings.Add("application/rtf", MediaTypes.APPLICATION);
             Mappings.Add("application/slate", MediaTypes.APPLICATION);
             Mappings.Add("application/wita", MediaTypes.APPLICATION);
@@ -87,9 +91,10 @@ namespace Harnet.Tools
             // Video
             Mappings.Add("video/mpeg", MediaTypes.VIDEO);
             Mappings.Add("video/quicktime", MediaTypes.VIDEO);
+            Mappings.Add("video/x-flv", MediaTypes.VIDEO);
 
             // Experimental
-            
+            Mappings.Add("font/woff", MediaTypes.EXPERIMENTAL);         // A server actually returned that value, even though "font/" is not a valid category as per the RFC. So putting that into "experimental"
 
         }
     }
