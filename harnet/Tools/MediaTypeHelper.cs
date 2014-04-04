@@ -96,9 +96,6 @@ namespace Harnet.Tools
             Mappings.Add("video/quicktime", MediaTypes.VIDEO);
             Mappings.Add("video/x-flv", MediaTypes.VIDEO);
 
-            // Experimental
-            Mappings.Add("font/woff", MediaTypes.EXPERIMENTAL);         // A server actually returned that value, even though "font/" is not a valid category as per the RFC. So putting that into "experimental"
-
         }
     }
 
