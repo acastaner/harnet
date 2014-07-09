@@ -307,7 +307,7 @@ namespace Harnet.Tools
             Mappings.Add("i-world/i-vrml", MediaTypes.VIDEO);
             Mappings.Add("music/crescendo", MediaTypes.VIDEO);
             Mappings.Add("music/x-karaoke", MediaTypes.VIDEO);
-            Mappings.Add("message/rfc822", MediaTypes.VIDEO);
+            
             Mappings.Add("ww/mime", MediaTypes.VIDEO); // LAST
             Mappings.Add("x-conference/x-cooltalk", MediaTypes.VIDEO);
             Mappings.Add("x-music/x-midi", MediaTypes.VIDEO);
