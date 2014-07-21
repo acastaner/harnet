@@ -230,6 +230,7 @@ namespace Harnet.Tools
             Mappings.Add("image/pict", MediaTypes.IMAGE);
             Mappings.Add("image/pjpeg", MediaTypes.IMAGE);
             Mappings.Add("image/png", MediaTypes.IMAGE);
+            Mappings.Add("image/svg+xml", MediaTypes.IMAGE);
             Mappings.Add("image/tiff", MediaTypes.IMAGE);
             Mappings.Add("image/vasa", MediaTypes.IMAGE);
             Mappings.Add("image/vnd.dwg", MediaTypes.IMAGE);
@@ -308,9 +309,11 @@ namespace Harnet.Tools
             Mappings.Add("music/crescendo", MediaTypes.VIDEO);
             Mappings.Add("music/x-karaoke", MediaTypes.VIDEO);
             
-            Mappings.Add("ww/mime", MediaTypes.VIDEO); // LAST
+            Mappings.Add("ww/mime", MediaTypes.VIDEO);
             Mappings.Add("x-conference/x-cooltalk", MediaTypes.VIDEO);
             Mappings.Add("x-music/x-midi", MediaTypes.VIDEO);
+
+            Mappings.Add("x-unknown", MediaTypes.EXPERIMENTAL); // Yes, servers actually send this sometimes
         }
     }
 
