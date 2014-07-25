@@ -32,6 +32,7 @@ namespace Harnet.Tools
             Mappings.Add("application/x-javascript", MediaTypes.TEXT);  // Is actually text
             Mappings.Add("application/javascript", MediaTypes.TEXT);    // Is actually text
             Mappings.Add("application/json", MediaTypes.TEXT);          // Is actually text
+            Mappings.Add("text/json", MediaTypes.TEXT);
             Mappings.Add("text/plain", MediaTypes.TEXT);
             Mappings.Add("text/richtext", MediaTypes.TEXT);
             Mappings.Add("text/tab-separated-values", MediaTypes.TEXT);
