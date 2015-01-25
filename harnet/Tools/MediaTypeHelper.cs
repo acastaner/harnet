@@ -251,12 +251,14 @@ namespace Harnet.Tools
             Mappings.Add("audio/basic", MediaTypes.AUDIO);
             Mappings.Add("audio/aiff", MediaTypes.AUDIO);
             Mappings.Add("audio/it", MediaTypes.AUDIO);
+            Mappings.Add("audio/m4a", MediaTypes.AUDIO);
             Mappings.Add("audio/make", MediaTypes.AUDIO);
             Mappings.Add("audio/midi", MediaTypes.AUDIO);
             Mappings.Add("audio/mpeg", MediaTypes.AUDIO);
             Mappings.Add("audio/mpeg3", MediaTypes.AUDIO);
             Mappings.Add("audio/mod", MediaTypes.AUDIO);
             Mappings.Add("audio/nspaudio", MediaTypes.AUDIO);
+            Mappings.Add("audio/ogg", MediaTypes.AUDIO);
             Mappings.Add("audio/wav", MediaTypes.AUDIO);
 
             Mappings.Add("audio/x-aiff", MediaTypes.AUDIO);
