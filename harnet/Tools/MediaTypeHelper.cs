@@ -215,6 +215,7 @@ namespace Harnet.Tools
             Mappings.Add("application/x-x509-ca-cert", MediaTypes.APPLICATION);
             Mappings.Add("application/x-x509-user-cert", MediaTypes.APPLICATION);
             Mappings.Add("application/x-zip", MediaTypes.APPLICATION);
+            Mappings.Add("application/font-woff", MediaTypes.APPLICATION);
 
             Mappings.Add("font/woff", MediaTypes.APPLICATION); // This should be application/font-woff but some servers will return this
             
