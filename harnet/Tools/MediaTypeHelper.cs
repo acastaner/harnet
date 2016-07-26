@@ -56,16 +56,16 @@ namespace Harnet.Tools
             Mappings.Add("text/x-script.ksh", MediaTypes.TEXT);
             Mappings.Add("text/x-script.lisp", MediaTypes.TEXT);
             Mappings.Add("text/x-pointplus", MediaTypes.TEXT);
-            
+
             Mappings.Add("application/xml", MediaTypes.TEXT);           // Is actually text
-            Mappings.Add("application/rss+xml", MediaTypes.TEXT);       // Is actually text            
+            Mappings.Add("application/rss+xml", MediaTypes.TEXT);       // Is actually text
 
             // Multipart
             Mappings.Add("multipart/alternative", MediaTypes.MULTIPART);
             Mappings.Add("multipart/appledouble", MediaTypes.MULTIPART);
             Mappings.Add("multipart/digest", MediaTypes.MULTIPART);
             Mappings.Add("multipart/header-set", MediaTypes.MULTIPART);
-            Mappings.Add("multipart/mixed", MediaTypes.MULTIPART);            
+            Mappings.Add("multipart/mixed", MediaTypes.MULTIPART);
             Mappings.Add("multipart/parallel", MediaTypes.MULTIPART);
 
             // Message
@@ -73,7 +73,7 @@ namespace Harnet.Tools
             Mappings.Add("message/news", MediaTypes.MESSAGE);
             Mappings.Add("message/partial", MediaTypes.MESSAGE);
             Mappings.Add("message/rfc822", MediaTypes.MESSAGE);
-            
+
             // Application
             Mappings.Add("application/acad", MediaTypes.APPLICATION);
             Mappings.Add("application/activemessage", MediaTypes.APPLICATION);
@@ -129,7 +129,7 @@ namespace Harnet.Tools
             Mappings.Add("application/pkcs-12", MediaTypes.APPLICATION);
             Mappings.Add("application/postscript", MediaTypes.APPLICATION);
             Mappings.Add("application/powerpoint", MediaTypes.APPLICATION);
-            Mappings.Add("application/remote-printing", MediaTypes.APPLICATION);            
+            Mappings.Add("application/remote-printing", MediaTypes.APPLICATION);
             Mappings.Add("application/rtf", MediaTypes.APPLICATION);
             Mappings.Add("application/slate", MediaTypes.APPLICATION);
             Mappings.Add("application/vnd.ms-pki.seccat", MediaTypes.APPLICATION);
@@ -215,9 +215,12 @@ namespace Harnet.Tools
             Mappings.Add("application/x-x509-ca-cert", MediaTypes.APPLICATION);
             Mappings.Add("application/x-x509-user-cert", MediaTypes.APPLICATION);
             Mappings.Add("application/x-zip", MediaTypes.APPLICATION);
+            Mappings.Add("application/font-woff", MediaTypes.APPLICATION);
 
             Mappings.Add("font/woff", MediaTypes.APPLICATION); // This should be application/font-woff but some servers will return this
-            
+            Mappings.Add("font/x-woff", MediaTypes.APPLICATION);
+            Mappings.Add("font/otf", MediaTypes.APPLICATION);
+
             // Image
             Mappings.Add("image/bmp", MediaTypes.IMAGE);
             Mappings.Add("image/fif", MediaTypes.IMAGE);
@@ -251,12 +254,14 @@ namespace Harnet.Tools
             Mappings.Add("audio/basic", MediaTypes.AUDIO);
             Mappings.Add("audio/aiff", MediaTypes.AUDIO);
             Mappings.Add("audio/it", MediaTypes.AUDIO);
+            Mappings.Add("audio/m4a", MediaTypes.AUDIO);
             Mappings.Add("audio/make", MediaTypes.AUDIO);
             Mappings.Add("audio/midi", MediaTypes.AUDIO);
             Mappings.Add("audio/mpeg", MediaTypes.AUDIO);
             Mappings.Add("audio/mpeg3", MediaTypes.AUDIO);
             Mappings.Add("audio/mod", MediaTypes.AUDIO);
             Mappings.Add("audio/nspaudio", MediaTypes.AUDIO);
+            Mappings.Add("audio/ogg", MediaTypes.AUDIO);
             Mappings.Add("audio/wav", MediaTypes.AUDIO);
 
             Mappings.Add("audio/x-aiff", MediaTypes.AUDIO);
@@ -309,7 +314,7 @@ namespace Harnet.Tools
             Mappings.Add("i-world/i-vrml", MediaTypes.VIDEO);
             Mappings.Add("music/crescendo", MediaTypes.VIDEO);
             Mappings.Add("music/x-karaoke", MediaTypes.VIDEO);
-            
+
             Mappings.Add("ww/mime", MediaTypes.VIDEO);
             Mappings.Add("x-conference/x-cooltalk", MediaTypes.VIDEO);
             Mappings.Add("x-music/x-midi", MediaTypes.VIDEO);
