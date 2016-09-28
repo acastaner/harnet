@@ -22,7 +22,7 @@ namespace Harnet
                 Log = rootObjectDto.Log.FromDto()
             };
         }
-        
+
         public static Log FromDto(this LogDto logDto)
         {
             return new Log
@@ -41,9 +41,9 @@ namespace Harnet
             return new Browser
             {
                 Name = browserDto.name,
-                Version = float.Parse(browserDto.version, CultureInfo.InvariantCulture.NumberFormat),
+                Version = browserDto.version,
                 Comment = browserDto.comment
-            };            
+            };
         }
 
         public static Creator FromDto(this CreatorDto creatorDto)
@@ -134,7 +134,7 @@ namespace Harnet
                 Comment = contentDto.comment
             };
         }
-        
+
         public static Response FromDto(this ResponseDto responseDto)
         {
             return new Response
@@ -200,7 +200,7 @@ namespace Harnet
                 Comment = timingsDto.comment
             };
         }
-        
+
         public static Entry FromDto(this EntryDto entryDto)
         {
             return new Entry
@@ -246,12 +246,12 @@ namespace Harnet
                 var jobj = (JObject)JsonConvert.DeserializeObject(obj.ToString());
                 string keyName = jobj["name"].ToString();
                 List<string> values;
-                
+
                 if (dictionary.ContainsKey(keyName))
                     values = dictionary[keyName];
                 else
                     values = new List<string>();
-                
+
                 values.Add(jobj["value"].ToString());
                 dictionary[keyName] = values;
             }
