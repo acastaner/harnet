@@ -81,10 +81,14 @@ namespace Harnet
         public static PostData FromDto(this PostDataDto postDataDto)
         {
             List<Param> paramList = new List<Param>();
-            foreach (ParamDto paramDto in postDataDto.@params)
+            if(postDataDto.@params != null)
             {
-                paramList.Add(paramDto.FromDto());
+                foreach (ParamDto paramDto in postDataDto.@params)
+                {
+                    paramList.Add(paramDto.FromDto());
+                }
             }
+
             return new PostData()
             {
                 MimeType = postDataDto.mimeType,
