@@ -1,20 +1,19 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>harnet\Harnet.csproj</id>
-    <version>1.0.0</version>
-    <authors>ACastaner</authors>
-    <owners>ACastaner</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Package description</description>
+    <id>HarNet</id>
+    <version>0.9.11</version>
+    <authors>acastaner</authors>
+    <owners>acastaner</owners>
+    <licenseUrl>https://www.gnu.org/licenses/lgpl.html</licenseUrl>
+    <projectUrl>https://github.com/acastaner/harnet</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>.NET Library for parsing HTTP Archive files</description>
     <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
-    <copyright>Copyright 2015</copyright>
-    <tags>Tag1 Tag2</tags>
+    <copyright>LGPL 3.0</copyright>
+    <tags>har HTTPArchive</tags>
     <dependencies>
-      <dependency id="SampleDependency" version="1.0" />
+      <dependency id="Newtonsoft.Json" version="9.0.1" />
     </dependencies>
   </metadata>
 </package>
